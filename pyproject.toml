@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "kouluruoka"
+version = "0.1.0"
+description = ""
+authors = ["Tommi Mosconi <tommi.mosconi@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+requests = "^2.32.3"
+beautifulsoup4 = "^4.12.3"
+secure-smtplib = "^0.1.1"
+schedule = "^1.2.2"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
