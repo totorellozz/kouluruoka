@@ -1,7 +1,6 @@
 import os
 import sys
 
-# Add the script directory to the Python path
 script_dir = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(script_dir)
 
@@ -16,27 +15,23 @@ from datetime import date
 
 
 def fetch_and_send_menu():
-    # Step 1: Make the initial request to get the current page's hidden fields
     url = "https://aromimenu.cgisaas.fi/EspooAromieMenus/FI/Default/ESPOO/Espoonlahdenkoulujalukio/Restaurant.aspx"
     headers = {
         'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36',
     }
 
-    # Start a session to persist cookies
     session = requests.Session()
     menu_details = []
     data = date.today()
 
-    # Initial GET request
     response = session.get(url, headers=headers)
     soup = BeautifulSoup(response.content, 'html.parser')
 
-    menu_panels = soup.find_all('div', class_='emenu_tab_panel_row')  # Adjust the selector based on the actual structure
+    menu_panels = soup.find_all('div', class_='emenu_tab_panel_row') 
     for panel in menu_panels:
         menu_name = panel.find('span', class_='boldtext').get_text(strip=True)
         menu_details.append(f"{menu_name}:")
 
-        # Extract all the dish names and their diet information
         dishes = panel.find_all('span', class_='labeltext')
         diets = panel.find_all('span', style="font-weight: 700; font-style: normal;")
 
@@ -50,8 +45,8 @@ def fetch_and_send_menu():
 
     port = 465  # For SSL
     smtp_server = "smtp.gmail.com"
-    sender_email = "tommi.mosconi@gmail.com"  # Enter your address
-    receiver_email = "tommi.mosconi@gmail.com"  # Enter receiver address
+    sender_email = cred.sender_email
+    receiver_email = cred.receiver_email
     password = cred.password
     subject = f"Ruokalista {data}"
 
